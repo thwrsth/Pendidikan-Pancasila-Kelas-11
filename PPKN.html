@@ -1,0 +1,393 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Pancasila — Dasar Negara</title>
+  <meta name="description" content="Website edukasi interaktif tentang Pancasila: pengertian, penerapan, dan nilai-nilainya." />
+  <style>
+    :root{
+      --bg:#fff8f2; --card:#ffffff; --muted:#666; --accent:#c62828; --glass: rgba(255,255,255,0.6);
+      --text:#111; --glass-border: rgba(0,0,0,0.06);
+    }
+    [data-theme='dark']{
+      --bg:#0f1720; --card:#0b1220; --muted:#bfc7d3; --accent:#ffcdcb; --text:#e6eef8; --glass: rgba(255,255,255,0.03); --glass-border: rgba(255,255,255,0.04);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,'Helvetica Neue',Arial; background:var(--bg); color:var(--text);}
+
+    /* Batik-like subtle background using SVG pattern */
+    body::before{
+      content:"";position:fixed;inset:0;z-index:-1;opacity:0.14;
+      background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200"><defs><pattern id="p" width="100" height="100" patternUnits="userSpaceOnUse"><rect width="100" height="100" fill="%23ffffff"/><path d="M10 30 C20 10,40 10,50 30 S80 50,90 30" stroke="%23c62828" stroke-width="2" fill="none" opacity="0.12"/></pattern></defs><rect width="100%" height="100%" fill="url(%23p)"/></svg>');
+      background-size:cover;mix-blend-mode:overlay;pointer-events:none;
+    }
+
+    header{display:flex;align-items:center;justify-content:space-between;padding:18px 20px;gap:12px}
+    .brand{display:flex;align-items:center;gap:12px}
+    .logo{width:56px;height:56px;border-radius:8px;display:grid;place-items:center;background:var(--card);box-shadow:0 6px 18px rgba(2,6,23,0.06);}
+    .logo svg{width:42px;height:42px}
+    nav{display:flex;gap:10px;align-items:center}
+    a.navlink{padding:8px 12px;border-radius:8px;text-decoration:none;color:var(--text);font-weight:600}
+    a.navlink:hover{background:var(--glass);}
+    .controls{display:flex;gap:8px;align-items:center}
+    .btn{background:var(--accent);color:#fff;padding:8px 12px;border-radius:10px;border:none;cursor:pointer}
+    .icon-btn{background:transparent;border:1px solid var(--glass-border);padding:8px;border-radius:8px;cursor:pointer}
+
+    main{max-width:1100px;margin:12px auto;padding:18px}
+    .hero{display:grid;grid-template-columns:1fr 360px;gap:20px;align-items:start}
+    @media(max-width:900px){.hero{grid-template-columns:1fr}nav{display:none}.logo{width:48px;height:48px}}
+
+    .card{background:var(--card);border-radius:14px;padding:18px;box-shadow:0 6px 20px rgba(2,6,23,0.06);}
+    h1{margin:0;font-size:22px}
+    p.lead{margin:8px 0 0;color:var(--muted)}
+
+    /* Accordion */
+    .accordion{margin-top:12px;border-radius:12px;overflow:hidden}
+    .acc-item{border-bottom:1px solid var(--glass-border)}
+    .acc-head{display:flex;justify-content:space-between;align-items:center;padding:14px;cursor:pointer}
+    .acc-head h3{margin:0;font-size:16px}
+    .acc-body{padding:0 14px 18px;max-height:0;overflow:hidden;transition:all .36s cubic-bezier(.2,.9,.3,1);opacity:0}
+    .acc-item.open .acc-body{max-height:600px;opacity:1}
+
+    /* Sila icons row */
+    .sila-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:10px;margin-top:12px}
+    @media(max-width:700px){.sila-grid{grid-template-columns:repeat(2,1fr)}}
+    .sila{padding:12px;border-radius:12px;display:flex;gap:10px;align-items:center;border:1px solid var(--glass-border);background:linear-gradient(180deg,var(--glass),transparent)}
+    .sila .icon{width:48px;height:48px;display:grid;place-items:center;border-radius:8px;background:rgba(0,0,0,0.03)}
+
+    .info-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:12px}
+    .small{font-size:13px;color:var(--muted)}
+
+    /* Infographic carousel simple */
+    .carousel{display:flex;gap:12px;overflow:auto;padding:12px 6px}
+    .infocard{min-width:240px;border-radius:12px;padding:12px;background:var(--card);flex:0 0 auto}
+
+    /* Modal */
+    .modal{position:fixed;inset:0;display:grid;place-items:center;background:rgba(2,6,23,0.5);z-index:60;opacity:0;pointer-events:none;transition:opacity .2s}
+    .modal.open{opacity:1;pointer-events:auto}
+    .modal .box{width:clamp(320px,80%,760px);background:var(--card);padding:18px;border-radius:12px}
+
+    footer{padding:20px;text-align:center;color:var(--muted)}
+
+    /* Scroll animation helpers */
+    .reveal{opacity:0;transform:translateY(16px);transition:all .6s cubic-bezier(.2,.9,.3,1)}
+    .reveal.visible{opacity:1;transform:none}
+
+    /* Quiz */
+    .quiz{display:grid;gap:12px}
+    .question{padding:12px;border-radius:8px;border:1px solid var(--glass-border)}
+    .qopt{display:block;padding:8px;margin:6px 0;border-radius:8px;border:1px solid var(--glass-border);cursor:pointer}
+
+    /* Utilities */
+    .muted{color:var(--muted)}
+  </style>
+</head>
+<body data-theme="light">
+  <header>
+    <div class="brand">
+      <div class="logo card">
+        <!-- simple Garuda-ish abstract mark -->
+        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c2.6 0 4.4 1.5 6 3.8L12 8 6 5.8C7.6 4 9.4 2 12 2z" fill="currentColor"/></svg>
+      </div>
+      <div>
+        <h1>Pancasila — Dasar Negara</h1>
+        <div class="small muted">Cerminan kepribadian dan jati diri bangsa </div>
+      </div>
+    </div>
+
+    <nav>
+      <a class="navlink" href="#penerapan">Penerapan</a>
+      <a class="navlink" href="#nilai">Nilai</a>
+      <a class="navlink" href="#quiz">Kuis</a>
+      <a class="navlink" href="#sumber">Sumber</a>
+    </nav>
+
+    <div class="controls">
+      <button id="darkToggle" class="icon-btn" title="Toggle dark mode">🌙</button>
+      <button id="openAbout" class="icon-btn" title="Tentang">ℹ️</button>
+      <button id="download" class="btn">Download HTML</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="card">
+        <p class="lead">Nilai: <strong>Ketuhanan</strong>, <strong>Kemanusiaan</strong>, <strong>Persatuan</strong>, <strong>Kerakyatan</strong>, <strong>Keadilan</strong></p>
+        <div class="sila-grid reveal" style="margin-top:12px">
+          <div class="sila"><div class="icon">🛐</div><div><strong>Sila 1</strong><div class="small">Ketuhanan</div></div></div>
+          <div class="sila"><div class="icon">🤝</div><div><strong>Sila 2</strong><div class="small">Kemanusiaan</div></div></div>
+          <div class="sila"><div class="icon">🇮🇩</div><div><strong>Sila 3</strong><div class="small">Persatuan</div></div></div>
+          <div class="sila"><div class="icon">🗳️</div><div><strong>Sila 4</strong><div class="small">Kerakyatan</div></div></div>
+          <div class="sila"><div class="icon">⚖️</div><div><strong>Sila 5</strong><div class="small">Keadilan</div></div></div>
+        </div>
+
+        <div style="margin-top:14px" class="reveal">
+          <h3>Keterkaitan Antarsila</h3>
+          <p class="small">Semua sila saling terkait dan membentuk satu kesatuan utuh — hubungan antar sila menjiwai tindakan sehari-hari.</p>
+        </div>
+
+        <!-- Accordion for tiap sila -->
+        <div class="accordion reveal" style="margin-top:12px" id="accordion">
+          <!-- item template repeated -->
+          <div class="acc-item" data-sila="1">
+            <div class="acc-head"><h3>Sila 1 — Ketuhanan Yang Maha Esa</h3><div class="muted">Klik untuk buka</div></div>
+            <div class="acc-body">
+              <p><strong>Nilai dasar:</strong> Ketuhanan</p>
+              <p><strong>Instrumental:</strong> UUD 1945 Pasal 28E, 29</p>
+              <p><strong>Praksis:</strong> Beribadah sesuai agama. Toleransi antarumat beragama. Tidak memaksakan agama. Menjaga kerukunan.</p>
+              <button class="btn" data-info="s1">Info Tambahan</button>
+            </div>
+          </div>
+
+          <div class="acc-item" data-sila="2">
+            <div class="acc-head"><h3>Sila 2 — Kemanusiaan yang Adil dan Beradab</h3><div class="muted">Klik untuk buka</div></div>
+            <div class="acc-body">
+              <p><strong>Nilai dasar:</strong> Kemanusiaan</p>
+              <p><strong>Instrumental:</strong> UUD 1945 Pasal 28A - 28J, Pasal 14</p>
+              <p><strong>Praksis:</strong> Menghormati sesama tanpa diskriminasi. Saling mencintai sesama manusia. Menolak kekerasan dan diskriminasi.</p>
+              <button class="btn" data-info="s2">Info Tambahan</button>
+            </div>
+          </div>
+
+          <div class="acc-item" data-sila="3">
+            <div class="acc-head"><h3>Sila 3 — Persatuan Indonesia</h3><div class="muted">Klik untuk buka</div></div>
+            <div class="acc-body">
+              <p><strong>Nilai dasar:</strong> Persatuan</p>
+              <p><strong>Instrumental:</strong> UUD 1945 Pasal 25, 35, 36, 36A, 36B</p>
+              <p><strong>Praksis:</strong> Menjaga persatuan & keberagaman. Menghargai perbedaan budaya & suku. Menjunjung tinggi simbol negara.</p>
+              <button class="btn" data-info="s3">Info Tambahan</button>
+            </div>
+          </div>
+
+          <div class="acc-item" data-sila="4">
+            <div class="acc-head"><h3>Sila 4 — Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan</h3><div class="muted">Klik untuk buka</div></div>
+            <div class="acc-body">
+              <p><strong>Nilai dasar:</strong> Kerakyatan</p>
+              <p><strong>Instrumental:</strong> UUD 1945 Pasal 2, 19</p>
+              <p><strong>Praksis:</strong> Menghargai pendapat orang lain. Mengikuti hasil musyawarah. Ikut serta dalam pemilu.</p>
+              <button class="btn" data-info="s4">Info Tambahan</button>
+            </div>
+          </div>
+
+          <div class="acc-item" data-sila="5">
+            <div class="acc-head"><h3>Sila 5 — Keadilan Sosial bagi Seluruh Rakyat Indonesia</h3><div class="muted">Klik untuk buka</div></div>
+            <div class="acc-body">
+              <p><strong>Nilai dasar:</strong> Keadilan</p>
+              <p><strong>Instrumental:</strong> UUD 1945 Pasal 33, 34</p>
+              <p><strong>Praksis:</strong> Membantu orang yang kesusahan. Tidak hidup boros. Bekerja keras demi kemajuan bersama.</p>
+              <button class="btn" data-info="s5">Info Tambahan</button>
+            </div>
+          </div>
+
+        </div>
+
+        <div style="margin-top:18px" class="small muted reveal">
+          <strong>Catatan:</strong> Klik tombol "Info Tambahan" untuk membuka modal yang memuat contoh kegiatan, hubungan antar-sila, dan kutipan UUD yang relevan.
+        </div>
+
+      </div>
+
+      <!-- Right column: multimedia, infografis, quick links -->
+      <aside class="card">
+        <h3>Multimedia & Infografis</h3>
+        <div class="small muted"></div>
+        <div style="margin-top:8px">
+          <video controls style="width:100%;border-radius:10px;background:#000;height:160px;object-fit:cover">
+            <!-- Replace source below with your video file -->
+            <source src="" type="video.mp4">
+            Video tidak tersedia.
+          </video>
+        </div>
+
+        <div style="margin-top:12px">
+          <button class="btn" id="openQuiz">Buka Kuis Singkat</button>
+        </div>
+
+      </aside>
+    </section>
+
+    <!-- Penerapan & nilai lebih lengkap -->
+    <section id="penerapan" class="card reveal" style="margin-top:18px">
+      <h2>Pancasila dalam Tindakan dan Kehidupan Bernegara</h2>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:12px">
+        <div>
+          <h4>A. Penerapan dalam Kehidupan Sehari-hari</h4>
+          <ul>
+            <li>Pelajar: ikut upacara, aktif organisasi, bersikap teladan.</li>
+            <li>Masyarakat: gotong royong, melestarikan budaya, menggunakan produk dalam negeri.</li>
+            <li>Negara: hukum & kebijakan berlandaskan Pancasila.</li>
+          </ul>
+        </div>
+        <div>
+          <h4>B. Penerapan dalam Kehidupan Bernegara</h4>
+          <p class="small">
+            <li>Beribadah dengan bebas dan nyaman</li>  
+            <li>Setiap lapisan masyarakat harus mendapatkan perlakuan yang sama dan adil</li>
+            <li>Mengibarkan bendera merah putih </li>
+            <li>Memberikan kepercayaan kepada wakil rakyat yang telah terpilih</li>
+            <li>Penyediaan fasilitas layanan kesehatan umum yang layak</li>
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section id="nilai" class="card reveal" style="margin-top:12px">
+      <h2>Pengertian & Ciri Ideologi</h2>
+      <p>Ideologi adalah seperangkat nilai, keyakinan, dan pandangan hidup yang menjadi landasan dalam bidang politik, sosial, ekonomi, & budaya. Pancasila sesuai dengan kepribadian bangsa Indonesia karena mempertahankan persatuan dan keberagaman.</p>
+
+      <h4 style="margin-top:12px">Unsur Esensial Ideologi (Koento Wibisono)</h4>
+      <ol>
+        <li>Keyakinan → gagasan vital yang diyakini kebenarannya untuk tujuan tertentu.</li>
+        <li>Mitos → ajaran yang diyakini akan menjamin tercapainya tujuan dengan cara tertentu.</li>
+        <li>Loyalitas → tuntutan keterlibatan optimal dari pendukungnya.</li>
+      </ol>
+
+      <h4 style="margin-top:12px">Ciri Umum Ideologi</h4>
+      <ul>
+        <li>Berpandangan dunia → pandangan terpadu tentang manusia, masyarakat, ekonomi, budaya, agama, kekuasaan.</li>
+        <li>Mengandung nilai & tujuan → terkait kebangsaan, kemanusiaan, keadilan, kebebasan, kesetaraan, keamanan.</li>
+        <li>Berpengaruh pada kebijakan → memengaruhi bentuk pemerintahan, kekuasaan, distribusi kesejahteraan, pengelolaan SDA.</li>
+        <li>Pemberi & pembeda identitas → membedakan individu/kelompok satu dengan lainnya.</li>
+        <li>Pendorong perubahan sosial → landasan gerakan sosial/politik untuk mengubah masyarakat.</li>
+        <li>Bersifat adaptif & kontekstual → mampu menyesuaikan dengan perkembangan zaman tanpa kehilangan jati diri.</li>
+      </ul>
+
+       <h4 style="margin-top:12px">Alasan Pancasila Menjadi Ideologi</h4>
+      <ul>
+        <li>Sesuai kepribadian bangsa Indonesia.</li>
+        <li>Mempertahankan persatuan dan keberagaman.</li>
+        <li>Menggali nilai dari budaya Nusantara.</li>
+        <li>Menjadi dasar pencapaian tujuan negara.</li>
+      </ul>
+
+
+    </section>
+
+    <!-- Quiz Modal / section -->
+    <section id="quiz" class="card reveal" style="margin-top:12px">
+      <h2>Kuis Singkat</h2>
+      <div class="quiz" id="quizArea">
+        <div class="question" data-q="1">
+          <strong>1. Sila pertama menekankan nilai ...?</strong>
+          <label class="qopt"><input name="q1" type="radio" value="a"> Kebebasan</label>
+          <label class="qopt"><input name="q1" type="radio" value="b"> Ketuhanan</label>
+          <label class="qopt"><input name="q1" type="radio" value="c"> Keadilan</label>
+        </div>
+        <div class="question" data-q="2">
+          <strong>2. Sila keempat berkaitan dengan ...?</strong>
+          <label class="qopt"><input name="q2" type="radio" value="a"> Kerakyatan</label>
+          <label class="qopt"><input name="q2" type="radio" value="b"> Persatuan</label>
+          <label class="qopt"><input name="q2" type="radio" value="c"> Ekonomi</label>
+        </div>
+        <button class="btn" id="submitQuiz">Kirim Jawaban</button>
+        <div id="quizResult" class="small muted" style="margin-top:10px"></div>
+      </div>
+    </section>
+
+    <section id="sumber" class="card reveal" style="margin-top:12px">
+      <h2>Sumber & Halaman Lain</h2>
+      <p class="small">Sumber: UUD 1945, literatur Pancasila, BPIP RI dan bahan pembelajaran resmi.</p>
+      <div style="margin-top:12px"><button class="btn" id="openSources">Lihat Referensi (placeholder)</button></div>
+    </section>
+
+  </main>
+
+  <div id="modal" class="modal" aria-hidden="true">
+    <div class="box">
+      <h3 id="modalTitle">Info</h3>
+      <div id="modalBody">Konten...</div>
+      <div style="margin-top:12px;text-align:right"><button id="closeModal" class="btn">Tutup</button></div>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 — Materi Pendidikan Pancasila • Menghayati Pancasila </footer>
+
+  <script>
+    // Utilities
+    const body = document.body;
+    // Dark mode toggle
+    const dt = document.getElementById('darkToggle');
+    const savedTheme = localStorage.getItem('theme') || 'light';
+    body.setAttribute('data-theme', savedTheme);
+    dt.textContent = savedTheme === 'dark' ? '☀️' : '🌙';
+    dt.addEventListener('click',()=>{
+      const next = body.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+      body.setAttribute('data-theme', next);
+      localStorage.setItem('theme', next);
+      dt.textContent = next === 'dark' ? '☀️' : '🌙';
+    });
+
+    // Accordion logic
+    document.querySelectorAll('.acc-head').forEach(h=>{
+      h.addEventListener('click',()=>{
+        const item = h.parentElement;
+        item.classList.toggle('open');
+      });
+    });
+
+    // Modal for Info Tambahan
+    const modal = document.getElementById('modal');
+    const modalBody = document.getElementById('modalBody');
+    const modalTitle = document.getElementById('modalTitle');
+    document.querySelectorAll('button[data-info]').forEach(b=>{
+      b.addEventListener('click',e=>{
+        const id = b.getAttribute('data-info');
+        modalTitle.textContent = 'Info — ' + id.toUpperCase();
+        // Simple content map (you can expand)
+        const map = {
+          s1: '<p>Contoh: Pelaksanaan toleransi antarumat beragama di lingkungan RT/RW; memfasilitasi kegiatan lintas iman.</p>',
+          s2: '<p>Contoh: Aksi sosial, donor darah, relawan saat bencana; menolak diskriminasi di sekolah.</p>',
+          s3: '<p>Contoh: Kegiatan gotong royong, festival budaya lokal, penggunaan bahasa daerah.</p>',
+          s4: '<p>Contoh: Diskusi warga, pemilu teratur, partisipasi dalam musyawarah desa.</p>',
+          s5: '<p>Contoh: Bantuan sosial, kebijakan pro-rakyat, program beasiswa untuk daerah tertinggal.</p>'
+        };
+        modalBody.innerHTML = map[id] || '<p>Tidak ada data.</p>';
+        modal.classList.add('open');
+        modal.setAttribute('aria-hidden','false');
+      });
+    });
+    document.getElementById('closeModal').addEventListener('click',()=>{modal.classList.remove('open');modal.setAttribute('aria-hidden','true')});
+    modal.addEventListener('click',e=>{ if(e.target===modal) { modal.classList.remove('open'); modal.setAttribute('aria-hidden','true'); } });
+
+    // Scroll reveal
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('visible') });
+    },{threshold:0.12});
+    document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+
+    // Quiz logic
+    document.getElementById('submitQuiz').addEventListener('click',()=>{
+      const a1 = document.querySelector('input[name="q1"]:checked');
+      const a2 = document.querySelector('input[name="q2"]:checked');
+      if(!a1 || !a2){ document.getElementById('quizResult').textContent = 'Jawab semua pertanyaan dulu.'; return; }
+      let score = 0; if(a1.value==='b') score++; if(a2.value==='a') score++;
+      document.getElementById('quizResult').textContent = `Skor: ${score}/2 — ${score===2? 'Bagus!':'Coba lagi untuk nilai sempurna.'}`;
+    });
+
+    // Open quiz button
+    document.getElementById('openQuiz').addEventListener('click',()=>{ location.hash = '#quiz'; document.querySelector('#quiz').scrollIntoView({behavior:'smooth'}); });
+
+    // Simple download HTML feature
+    document.getElementById('download').addEventListener('click',()=>{
+      const filename = 'pancasila_website.html';
+      const blob = new Blob([document.documentElement.outerHTML],{type:'text/html'});
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a'); a.href = url; a.download = filename; a.click(); URL.revokeObjectURL(url);
+    });
+
+    // Open About
+    document.getElementById('openAbout').addEventListener('click',()=>{
+      modalTitle.textContent = 'Tentang';
+      modalBody.innerHTML = '<p>Website edukasi interaktif tentang Pancasila: pengertian, penerapan, dan nilai-nilainya.</p>';
+      modal.classList.add('open');modal.setAttribute('aria-hidden','false');
+    });
+
+    // Download note: this saves current DOM HTML, you may want to open "View Source" and save as .html to preserve data-theme setting.
+
+    // Lightweight accessibility: keyboard support for accordion
+    document.querySelectorAll('.acc-head').forEach(h=>{ h.tabIndex=0; h.addEventListener('keydown',e=>{ if(e.key==='Enter' || e.key===' ') h.click(); }) });
+  </script>
+</body>
+</html>
