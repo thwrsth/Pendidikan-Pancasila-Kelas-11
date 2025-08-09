@@ -85,11 +85,7 @@
 </head>
 <body data-theme="light">
   <header>
-    <div class="brand">
-      <div class="logo card">
-        <!-- simple Garuda-ish abstract mark -->
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c2.6 0 4.4 1.5 6 3.8L12 8 6 5.8C7.6 4 9.4 2 12 2z" fill="currentColor"/></svg>
-      </div>
+  <div>
       <div>
         <h1>Pancasila — Dasar Negara</h1>
         <div class="small muted">Cerminan kepribadian dan jati diri bangsa </div>
@@ -195,7 +191,7 @@
         <div style="margin-top:8px">
           <video controls style="width:100%;border-radius:10px;background:#000;height:160px;object-fit:cover">
             <!-- Replace source below with your video file -->
-            <source src="" type="video.mp4">
+            <source src="video.mp4" type="video/mp4">
             Video tidak tersedia.
           </video>
         </div>
@@ -288,7 +284,7 @@
     <section id="sumber" class="card reveal" style="margin-top:12px">
       <h2>Sumber & Halaman Lain</h2>
       <p class="small">Sumber: UUD 1945, literatur Pancasila, BPIP RI dan bahan pembelajaran resmi.</p>
-      <div style="margin-top:12px"><button class="btn" id="openSources">Lihat Referensi (placeholder)</button></div>
+      <div style="margin-top:12px"><button class="btn" id="openSources">Lihat Referensi</button></div>
     </section>
 
   </main>
@@ -337,11 +333,11 @@
         modalTitle.textContent = 'Info — ' + id.toUpperCase();
         // Simple content map (you can expand)
         const map = {
-          s1: '<p>Contoh: Pelaksanaan toleransi antarumat beragama di lingkungan RT/RW; memfasilitasi kegiatan lintas iman.</p>',
-          s2: '<p>Contoh: Aksi sosial, donor darah, relawan saat bencana; menolak diskriminasi di sekolah.</p>',
-          s3: '<p>Contoh: Kegiatan gotong royong, festival budaya lokal, penggunaan bahasa daerah.</p>',
-          s4: '<p>Contoh: Diskusi warga, pemilu teratur, partisipasi dalam musyawarah desa.</p>',
-          s5: '<p>Contoh: Bantuan sosial, kebijakan pro-rakyat, program beasiswa untuk daerah tertinggal.</p>'
+          s1: '<p>Sila Pertama, Ketuhanan Yang Maha Esa, tercermin dalam kegiatan beribadah sesuai agama masing-masing, bersikap toleran, menjaga kerukunan, dan tidak memaksakan agama. Nilai ini memperkuat sila kedua tentang kemanusiaan dan sila ketiga tentang persatuan. Hal ini sejalan dengan UUD 1945 Pasal 29 ayat (1) yang menegaskan bahwa negara berdasar atas Ketuhanan Yang Maha Esa, serta Pasal 28E ayat (1) yang menjamin kebebasan beragama.</p>',
+          s2: '<p>Sila Kedua, Kemanusiaan yang Adil dan Beradab, diwujudkan dengan menghormati sesama tanpa diskriminasi, menolak kekerasan, dan membantu dalam kegiatan sosial. Sila ini memperkuat sila pertama dengan mengakui martabat manusia sebagai ciptaan Tuhan, serta mendukung sila kelima tentang keadilan sosial. Dasar hukumnya antara lain Pasal 28A yang menjamin hak untuk hidup dan Pasal 28I ayat (1) tentang hak asasi manusia yang tidak dapat dikurangi.</p>',
+          s3: '<p>Sila Ketiga, Persatuan Indonesia, dapat dilihat dari menjaga kebhinekaan, menghargai perbedaan budaya, menjunjung tinggi simbol negara, dan mengutamakan kepentingan bangsa. Nilai persatuan mendukung sila keempat dalam musyawarah demi bangsa dan sila kelima demi pemerataan keadilan. Ini selaras dengan Pasal 35 tentang Bendera Merah Putih, Pasal 36 tentang Bahasa Indonesia, dan Pasal 36A tentang Lambang Negara Garuda Pancasila.</p>',
+          s4: '<p>Sila Keempat, Kerakyatan yang Dipimpin oleh Hikmat Kebijaksanaan dalam Permusyawaratan/Perwakilan, tercermin dalam menghargai pendapat orang lain, mengikuti hasil musyawarah, berpartisipasi dalam pemilu, dan memastikan wakil rakyat menyuarakan aspirasi rakyat. Nilai ini memperkuat sila ketiga tentang persatuan dan sila kelima tentang keadilan. Dasarnya terdapat pada Pasal 2 ayat (1) tentang keanggotaan MPR dan Pasal 19 ayat (1) tentang pemilihan umum.</p>',
+          s5: '<p>Sila Kelima, Keadilan Sosial bagi Seluruh Rakyat Indonesia, diwujudkan dengan membantu yang kesulitan, hidup sederhana, menghormati hak orang lain, dan bekerja keras demi kemajuan bersama. Sila ini memperkuat sila kedua dalam menjamin hak asasi dan memerlukan sila keempat untuk keputusan adil. Dasarnya terdapat pada Pasal 33 ayat (1) tentang perekonomian berdasar asas kekeluargaan dan Pasal 34 ayat (1) tentang pemeliharaan fakir miskin dan anak terlantar.</p>'
         };
         modalBody.innerHTML = map[id] || '<p>Tidak ada data.</p>';
         modal.classList.add('open');
